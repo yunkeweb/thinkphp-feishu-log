@@ -11,9 +11,6 @@ class FeiShu implements LogHandlerInterface
         'webhook' => '',
         'secret_key' => '',
         'time_format'  => 'c',
-        'json'         => false,
-        'json_options' => JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES,
-        'format'       => '[%s][%s] %s',
         'curl_opt_timeout' => 5,
         'curl_opt_connect_timeout' => 10
     ];
@@ -36,17 +33,12 @@ class FeiShu implements LogHandlerInterface
         // 日志信息封装
         $time = \DateTime::createFromFormat('0.u00 U', microtime())->setTimezone(new \DateTimeZone(date_default_timezone_get()))->format($this->config['time_format']);
         foreach ($log as $type => $val) {
-            $message = [];
             foreach ($val as $msg) {
                 if (!is_string($msg)) {
                     $msg = var_export($msg, true);
                 }
-
-                $message[] = $this->config['json'] ?
-                    json_encode(['time' => $time, 'type' => $type, 'msg' => $msg], $this->config['json_options']) :
-                    sprintf($this->config['format'], $time, $type, $msg);
+                $info[] = sprintf("日志时间: %s 日志级别: %s 日志内容: %s",$time,$type,$msg);
             }
-            $info[$type] = $message;
         }
         if ($info) {
             return $this->write($info);
@@ -57,12 +49,11 @@ class FeiShu implements LogHandlerInterface
     protected function write(array $message):bool
     {
         $content = [];
-
         foreach ($message as $msg) {
             $content[] = [
                 [
                     'tag' => 'text',
-                    'text' => is_array($msg) ? implode(PHP_EOL, $msg) : $msg
+                    'text' => $msg
                 ]
             ];
         }
