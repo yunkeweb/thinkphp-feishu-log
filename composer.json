@@ -1,0 +1,22 @@
+{
+    "name": "yunkeweb/thinkphp-feishu-log",
+    "description": "基于thinkphp的飞书日志扩展",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "yunkeweb",
+            "email": "yunkeweb@qq.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.4.0",
+        "topthink/framework": "^6.0|^8.0",
+        "ext-json": "*",
+        "ext-curl": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Yunkeweb\\ThinkphpFeiShuLog\\": "src"
+        }
+    }
+}
