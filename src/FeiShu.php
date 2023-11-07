@@ -40,9 +40,11 @@ class FeiShu implements LogHandlerInterface
                 $info[] = sprintf("日志时间: %s 日志级别: %s 日志内容: %s",$time,$type,$msg);
             }
         }
+
         if ($info) {
             return $this->write($info);
         }
+
         return true;
     }
 
