@@ -20,10 +20,6 @@ class FeiShu implements LogHandlerInterface
         if (is_array($config)) {
             $this->config = array_merge($this->config, $config);
         }
-
-        if (empty($this->config['format'])) {
-            $this->config['format'] = '[%s][%s] %s';
-        }
     }
 
     public function save(array $log): bool
